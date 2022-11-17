@@ -1,4 +1,9 @@
-#include "main.h"
+#include <stdio.h>
+#include <string.h>
+
+#define STR_MAX_SZ 256
+
+#define USAGE "Incorrect number of arguments passed to my_grep.\n\tUsage: my_grep [switches] pattern filename\n"
 
 /* 
     parse_arguments() recieves argc and argv and copies the command line
@@ -18,6 +23,7 @@ void match_pattern(char* pattern, char* filename)
 {
     FILE *f;
     char line[STR_MAX_SZ];
+    memset(line, 0, STR_MAX_SZ);
 
     f = fopen(filename, "rt");
     if(f==NULL)
@@ -30,9 +36,13 @@ void match_pattern(char* pattern, char* filename)
     {
         fgets(line, STR_MAX_SZ, f);
         if(f==NULL)
+        {
             break;
+        }  
         if(strstr(line, pattern))
+        {
             printf("%s", line);
+        }    
     }
     fclose(f);
     
